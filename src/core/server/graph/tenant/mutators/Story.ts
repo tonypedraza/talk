@@ -37,7 +37,7 @@ export const Story = (ctx: TenantContext) => ({
     input: GQLUpdateStoryInput
   ): Promise<Readonly<story.Story> | null> =>
     mapFieldsetToErrorCodes(
-      update(ctx.mongo, ctx.tenant, input.id, omitBy(input.story, isNull)),
+      update(ctx.mongo, ctx.tenant, input.id, input.story),
       {
         "input.story.url": [
           ERROR_CODES.STORY_URL_NOT_PERMITTED,
