@@ -5,6 +5,7 @@ import { Omit } from "talk-common/types";
 import { dotize } from "talk-common/utils/dotize";
 import { DuplicateStoryURLError } from "talk-server/errors";
 import {
+  GQLMessageBox,
   GQLMODERATION_MODE,
   GQLStoryMetadata,
 } from "talk-server/graph/tenant/schema/__generated__/types";
@@ -74,6 +75,12 @@ export interface Story extends TenantResource {
    * premodLinksEnable will put all comments that contain links into premod.
    */
   premodLinksEnable?: boolean;
+
+  /**
+   * messageBox will be shown in the comments stream to set the context of
+   * the conversation.
+   */
+  messageBox?: GQLMessageBox;
 }
 
 export async function createStoryIndexes(mongo: Db) {

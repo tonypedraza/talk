@@ -17,5 +17,6 @@ export const Story: GQLStoryTypeResolver<story.Story> = {
   moderation: (s, input, ctx) => s.moderation || ctx.tenant.moderation,
   premodLinksEnable: (s, input, ctx) =>
     s.premodLinksEnable || ctx.tenant.premodLinksEnable,
+  messageBox: (s, input, ctx) => s.messageBox || ctx.tenant.messageBox,
   moderationQueues: storyModerationInputResolver,
 };

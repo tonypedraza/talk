@@ -46,6 +46,7 @@ const enhanced = withFragmentContainer<Props>({
       id
       ...PremodConfigContainer_story
       ...PremodLinksConfigContainer_story
+      ...MessageBoxConfigContainer_story
     }
   `,
 })(withUpdateStoryMutation(ConfigureCommentStreamContainer));

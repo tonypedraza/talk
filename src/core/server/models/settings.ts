@@ -2,6 +2,7 @@ import { Omit } from "talk-common/types";
 import {
   GQLAuthDisplayNameConfiguration,
   GQLCharCount,
+  GQLCommunityGuidelines,
   GQLDisableCommenting,
   GQLEmail,
   GQLExternalIntegrations,
@@ -9,6 +10,7 @@ import {
   GQLGoogleAuthIntegration,
   GQLKarma,
   GQLLocalAuthIntegration,
+  GQLMessageBox,
   GQLMODERATION_MODE,
   GQLOIDCAuthIntegration,
   GQLReactionConfiguration,
@@ -19,13 +21,8 @@ import {
 export interface ModerationSettings {
   moderation: GQLMODERATION_MODE;
   requireEmailConfirmation: boolean;
-  communityGuidelines: {
-    enabled: boolean;
-    content?: string;
-  };
-  questionBoxEnable: boolean;
-  questionBoxIcon?: string;
-  questionBoxContent?: string;
+  communityGuidelines: GQLCommunityGuidelines;
+  messageBox: GQLMessageBox;
   premodLinksEnable: boolean;
   autoCloseStream: boolean;
 

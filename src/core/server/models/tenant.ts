@@ -89,7 +89,9 @@ export async function createTenant(mongo: Db, input: CreateTenantInput) {
       enabled: false,
       content: "",
     },
-    questionBoxEnable: false,
+    messageBox: {
+      enabled: false,
+    },
     premodLinksEnable: false,
     autoCloseStream: false,
     disableCommenting: {

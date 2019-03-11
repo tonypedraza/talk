@@ -844,7 +844,7 @@ type ReactionConfiguration {
 
 type CommunityGuidelines {
   """
-  enable set to true will show the guidelines above the question box.
+  enable set to true will show the guidelines above the message box.
   """
   enabled: Boolean!
 
@@ -852,6 +852,28 @@ type CommunityGuidelines {
   content of the guidelines.
   """
   content: String
+}
+
+################################################################################
+## MessageBox
+################################################################################
+
+type MessageBox {
+  """
+  enabled will enable the Message Box's content to be visible above
+  the comment box.
+  """
+  enabled: Boolean!
+
+  """
+  content is the content of the Message Box.
+  """
+  content: String
+
+  """
+  icon is the icon for the Message Box.
+  """
+  icon: String
 }
 
 ################################################################################
@@ -908,20 +930,10 @@ type Settings {
   communityGuidelines: CommunityGuidelines!
 
   """
-  questionBoxEnable will enable the Question Box's content to be visible above
-  the comment box.
+  messageBox will be shown in the comments stream to set the context of
+  the conversation.
   """
-  questionBoxEnable: Boolean!
-
-  """
-  questionBoxContent is the content of the Question Box.
-  """
-  questionBoxContent: String
-
-  """
-  questionBoxIcon is the icon for the Question Box.
-  """
-  questionBoxIcon: String
+  messageBox: MessageBox!
 
   """
   premodLinksEnable will put all comments that contain links into premod.
@@ -1591,6 +1603,12 @@ type Story {
   premodLinksEnable will put all comments that contain links into premod.
   """
   premodLinksEnable: Boolean!
+
+  """
+  messageBox will be shown in the comments stream to set the context of
+  the conversation.
+  """
+  messageBox: MessageBox!
 }
 
 ################################################################################
@@ -2119,7 +2137,7 @@ input SettingsKarmaInput {
 
 input SettingsCommunityGuidelinesInput {
   """
-  enable set to true will show the guidelines above the question box.
+  enable set to true will show the guidelines above the message box.
   """
   enabled: Boolean
 
@@ -2184,20 +2202,20 @@ input SettingsInput {
   communityGuidelines: SettingsCommunityGuidelinesInput
 
   """
-  questionBoxEnable will enable the Question Box's content to be visible above
+  messageBoxEnable will enable the Message Box's content to be visible above
   the comment box.
   """
-  questionBoxEnable: Boolean
+  messageBoxEnable: Boolean
 
   """
-  questionBoxContent is the content of the Question Box.
+  messageBoxContent is the content of the Message Box.
   """
-  questionBoxContent: String
+  messageBoxContent: String
 
   """
-  questionBoxIcon is the icon for the Question Box.
+  messageBoxIcon is the icon for the Message Box.
   """
-  questionBoxIcon: String
+  messageBoxIcon: String
 
   """
   premodLinksEnable will put all comments that contain links into premod.
@@ -2603,6 +2621,24 @@ type CreateStoryPayload {
 ## updateStory
 ##################
 
+input UpdateMessageBoxInput {
+  """
+  enabled will enable the Message Box's content to be visible above
+  the comment box.
+  """
+  enabled: Boolean!
+
+  """
+  content is the content of the Message Box.
+  """
+  content: String
+
+  """
+  icon is the icon for the Message Box.
+  """
+  icon: String
+}
+
 """
 UpdateStory is the input required to update a Story.
 """
@@ -2632,6 +2668,12 @@ input UpdateStory {
   premodLinksEnable will put all comments that contain links into premod.
   """
   premodLinksEnable: Boolean
+
+  """
+  messageBox will be shown in the comments stream to set the context of
+  the conversation.
+  """
+  messageBox: UpdateMessageBoxInput
 }
 
 input UpdateStoryInput {
