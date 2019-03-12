@@ -290,6 +290,9 @@ export const baseStory = {
     totalVisible: 0,
   },
   premodLinksEnable: false,
+  messageBox: {
+    enabled: false,
+  },
 };
 
 export const stories = denormalizeStories([
@@ -322,6 +325,18 @@ export const stories = denormalizeStories([
     },
   },
 ]);
+
+export const storyWithNoComments = denormalizeStory({
+  ...baseStory,
+  id: "story-with-no-comments",
+  url: "http://localhost/stories/story-with-no-comments",
+  comments: {
+    edges: [],
+    pageInfo: {
+      hasNextPage: false,
+    },
+  },
+});
 
 export const storyWithReplies = denormalizeStory({
   ...baseStory,
