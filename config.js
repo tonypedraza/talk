@@ -275,6 +275,10 @@ const CONFIG = {
   // TRUST_THRESHOLDS defines the thresholds used for automoderation.
   TRUST_THRESHOLDS: process.env.TRUST_THRESHOLDS || 'comment:2,-1;flag:2,-1',
 
+  // TRUST_DECREASE_LEVEL defines the exponential rate that rejections or flags
+  // decrease trust. From 1^x to 2^x. Default is 1 (1 point at a time)
+  TRUST_DECREASE_LEVEL: process.env.TRUST_DECREASE_LEVEL || 1,
+
   // IGNORE_FLAGS_AGAINST_STAFF disables staff members from entering the
   // reported queue from comments after this was enabled and from reports
   // against the staff members user account.

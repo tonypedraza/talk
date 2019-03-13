@@ -1,6 +1,6 @@
 const debug = require('debug')('talk:services:karma');
 const UserModel = require('../models/user');
-const { TRUST_THRESHOLDS } = require('../config');
+const { TRUST_THRESHOLDS, TRUST_DECREASE_LEVEL } = require('../config');
 const { get } = require('lodash');
 
 /**
@@ -135,13 +135,36 @@ class KarmaService {
    * array of id's.
    */
   static async modifyUser(id, direction = 1, type = 'comment', multi = false) {
-    const key = `metadata.trust.${type}.karma`;
-
+    const karmaKey = `metadata.trust.${type}.karma`; // karma for comment or flags
+    const consecKey = `metadata.rejected.${type}.count`; // count of consecutive rejections or flags
     let update = {
       $inc: {
-        [key]: direction,
+        [karmaKey]: direction,
+      },
+      $set: {
+        [consecKey]: 0,
       },
     };
+    if (direction === -1) {
+      const commenter = await UserModel.findOne({
+        id: id,
+      });
+      const karma = get(commenter, karmaKey, 0);
+      const consecNum = get(commenter, consecKey, 0);
+      const decreaseLevel = Math.min(10, TRUST_DECREASE_LEVEL); // Don't let the decreaseLevel pass 10
+      // Calculate decrementNum. If karma is already negative, set decrementNum to -1
+      let decrementNum =
+        Math.floor(Math.pow(1 + decreaseLevel / 10, consecNum)) * -1;
+      if (karma < 0) {
+        decrementNum = -1;
+      }
+      update = {
+        $inc: {
+          [karmaKey]: decrementNum,
+          [consecKey]: 1,
+        },
+      };
+    }
 
     if (multi) {
       // If it was in multi-mode but there was no user's to adjust, bail.
